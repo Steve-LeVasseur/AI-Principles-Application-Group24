@@ -101,11 +101,11 @@ hybridSort(l, 'merge', 'bubble', 2) # hybrid merge on very short list
 l = [5, 21, 14] # very short list
 hybridSort(l, 'quick', 'bubble', 2) # hybrid quick on very short list
 l = [5, 21, 14] # very short list
-quickSort(l, , ) # quicksort on very short list
+quickSort(l, 0, 2) # quicksort on very short list
 l = [5, 21, 14] # very short list
 bubbleSort(l) # bubblesort on very short list
 l = [5, 21, 14] # very short list
-mergeSort(l, , ) # quicksort on very short list
+mergeSort(l, 0, 2) # quicksort on very short list
 
 
 # Comment Section here
