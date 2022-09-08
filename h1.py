@@ -1,4 +1,3 @@
-from turtle import right
 import time
 
 # Need to compare behavior of algorithms such as by number of comparisons or execution time
