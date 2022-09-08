@@ -1,26 +1,23 @@
-import time
+# quickSort Implementation
+def quickSort(list, leftIndex, rightIndex):
+    if (len(list) == 1):
+        return list
+    if leftIndex < rightIndex:
+        pivotIndex = quickSortPartition(list, leftIndex, rightIndex) # find pivot
+        quickSort(list, leftIndex, pivotIndex-1) # sort list to left of pivot
+        quickSort(list, pivotIndex+1, rightIndex) # sort list to right of pivot
 
-count = 0
+def quickSortPartition(list, leftIndex, rightIndex):
+    pivot = list[rightIndex]
+    pointer = leftIndex
+    for i in range(leftIndex, rightIndex):
+        if list[i] <= pivot:
+            #swap the value to the front
+            list[i], list[pointer] = list[pointer], list[i]
+            pointer += 1
+    list[pointer], list[rightIndex] = list[rightIndex], list[pointer]
+    return pointer
 
-def bubbleSort(L):
-    global count
-    # Scan through the list this many times
-    for i in range(len(L)-1):
-        # Scan through the list item by item
-        for j in range(len(L)-i-1):
-            count += 1 # increment comparison counter
-            # if the following item in the list is larger than the current item
-            if L[j+1] < L[j]:
-                # swap the two items in the list
-                L[j], L[j+1] = L[j+1], L[j]
-
-
-
-
-
-l = [5, 21, 14, 6, 9, 13, 56, 79, 1003, 123, 432, 1, 1, 1, 1] # very short list
-start_time = time.time()
-bubbleSort(l) # bubblesort on very short list
-end_time = time.time()
+l = [0, 5, 4, 3, 2, 1]
+quickSort(l, 0, 5)
 print(l)
-print("bubblesort very short list: ", count, " - ", (end_time-start_time)* 10**3)
