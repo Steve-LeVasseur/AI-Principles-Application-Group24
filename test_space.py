@@ -18,7 +18,7 @@ def bubbleSort(L):
 
 
 
-l = [5, 21, 14, 6, 9, 13, 56, 79, 1003, 123, 432, 1, 1, 1, 1] # very short list
+l = [5, 21, 14, 6, 9, 13, 56, 79, 1003, 123, 432, 1, 1, 1, 1, 1, 1, 1, 1, 2, 34, 5, 4, 534, 5, 345, 345, 34, 5, 34, 53, 453, 45, 345, 3453, 45, 345, 3, 2] # very short list
 start_time = time.time()
 bubbleSort(l) # bubblesort on very short list
 end_time = time.time()
