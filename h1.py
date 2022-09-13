@@ -1,6 +1,11 @@
-import time
+# Steven LeVasseur
+# Ethan Fidler
+# Joseph Brayshaw
+# Neil McGrogan
+# Homework 24
 
-# Need to compare behavior of algorithms such as by number of comparisons or execution time
+
+import time
 
 count = 0 # global count variable
 
@@ -183,9 +188,6 @@ def hybridSort(list, BIG, SMALL, THRESHOLD, start=0, end=None):
 
 
 # Tests here
-
-# global count variable seems to be working
-# Having some issue with the timer
 
 hybridSort([5, 1, 9, 3, 67, 90, 2], 'merge', 'bubble', 5)
 
