@@ -24,3 +24,19 @@ bubbleSort(l) # bubblesort on very short list
 end_time = time.time()
 print(l)
 print("bubblesort very short list: ", count, " - ", (end_time-start_time)* 10**3)
+
+
+def w_dfs(graph, start):
+    visited = set()
+    path = [start]
+    fringe = graph[start] # initialize queue with starting city
+
+    while not fringe.isEmpty(): # search queue until queue is empty
+        city = fringe.pop(0) # pop next entry in queue
+        path.append(city) # add to path
+        visited.add(city) # add to list of visited cities
+        if (city == 'Bucharest'):
+            return path
+        for place in graph[city]:
+            if (place not in visited):
+                fringe.insert(0,place)

@@ -81,57 +81,20 @@ road_map_dists = {
     'Zerind' : 374
 }
 
-
-
-
-
-# Using a Python dictionary to act as an adjacency list
-# graph = {
-#   '5' : ['3','7'],
-#   '3' : ['2', '4'],
-#   '7' : ['8'],
-#   '2' : [],
-#   '4' : ['8'],
-#   '8' : []
-# }
-
-visited = set() # Set to keep track of visited nodes of graph.
-
-def dfs(visited, graph, node):  #function for dfs 
-    if node not in visited:
-        print (node)
-        visited.add(node)
-        for neighbour in graph[node]:
-            dfs(visited, graph, neighbour)
-
-potential_routes = set()
-
-def dfs_why(visited, road_map, city):
-    if city not in visited: # don't revisit cities we've already visited
-        visited.add(city) # visit city if we haven't visited it yet
-        for bordering_city in road_map[city]: # not proper syntax
-            dfs_why(visited, road_map, bordering_city)
-
-# some code here that finds the best route in potential_routes 
-    # either based on distance or num cities visited
-# print the best route
-
-# Driver Code
-# print("Following is the Depth-First Search")
-# dfs(visited, graph, '5')
-
-def w_dfs(graph, start, visited=set(), path=[]): # graph: list, start: string
+def r_dfs(graph, start, visited=set(), path=[]): # graph: list, start: string
     path.append(start)
     visited.add(start)
     if (start == 'Bucharest'):
         return path
     for city in graph[start]:
         if (city not in visited):
-            result = w_dfs(graph, city, visited=visited, path=path)
+            result = r_dfs(graph, city, visited=visited, path=path)
             if result is not None:
                 return result
     path.pop()
     return None
+
+
 
 
 def best_first(graph, start, visited=set(), path=[]):
