@@ -145,12 +145,14 @@ def best_first(graph, start, visited=set(), path=[]):
 
     # Right now I only run it on the closest city
     # Still thinking about how to make a proper queue with proper ordering
-    closest_city = graph[start][0]
-    for city in graph[start]:
-        if city not in visited:
-            if road_map_dists[city] < road_map_dists[closest_city]:
-                closest_city = city
-    result = best_first(graph, closest_city, visited=visited, path=path)
+    closest_city = graph[start][0] # guess that the first neighbor is closest to Bucharest
+    for city in graph[start]: # for each neighboring city
+        if city not in visited: # if it hasn't been visited yet
+            if road_map_dists[city] < road_map_dists[closest_city]: # check if it's closer to Bucharest than the current 'closest_city
+                closest_city = city # Make it the new closest_city if it is
+    # I only run best first on the closest neighbor to Bucharest
+    # all the neighbors should be added to a queue in some way in the final product
+    result = best_first(graph, closest_city, visited=visited, path=path) # Run best first on the closest neighbor to Bucharest
     if result is not None:
         return result
     path.pop()
