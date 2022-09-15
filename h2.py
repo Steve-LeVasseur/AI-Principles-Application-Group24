@@ -58,6 +58,29 @@ road_map_nonums = { # still singleton tuples though
     'Zerind' : ['Arad', 'Oradea']
 }
 
+road_map_dists = {
+    'Arad' : 366,
+    'Bucharest' : 0,
+    'Craiova' : 160,
+    'Drobeta' : 242,
+    'Eforie' : 161,
+    'Fagaras' : 176,
+    'Giurgiu' : 77,
+    'Hirsova' : 151,
+    'Iasi' : 226,
+    'Lugoj' : 244,
+    'Mehadia' : 241,
+    'Neamt' : 234,
+    'Oradea' : 380,
+    'Pitesti' : 100,
+    'Rimnicu Vilcea' : 193,
+    'Sibiu' : 253,
+    'Timisoara' : 329,
+    'Urziceni' : 80,
+    'Vaslui' : 199,
+    'Zerind' : 374
+}
+
 
 
 
@@ -109,6 +132,35 @@ def w_dfs(graph, start, visited=set(), path=[]): # graph: list, start: string
                 return result
     path.pop()
     return None
+
+
+def best_first(graph, start, visited=set(), path=[]):
+    path.append(start)
+    visited.add(start)
+    if (start == 'Bucharest'):
+        return path
+    # This part needs to be different
+    # Need to evaluate connected cities and order them by
+    # shortest straight line distance to Bucharest
+
+    # Right now I only run it on the closest city
+    # Still thinking about how to make a proper queue with proper ordering
+    closest_city = graph[start][0]
+    for city in graph[start]:
+        if city not in visited:
+            if road_map_dists[city] < road_map_dists[closest_city]:
+                closest_city = city
+    result = best_first(graph, closest_city, visited=visited, path=path)
+    if result is not None:
+        return result
+    path.pop()
+    return None    
+
+result = best_first(road_map_nonums, "Arad")
+print(result)
+
+# result = w_dfs(road_map_nonums, "Arad")
+# print(result)
 
 """
 graph = {
