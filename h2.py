@@ -157,3 +157,14 @@ def bfs(visited, graph, node): #function for BFS
 print("Following is the Breadth-First Search")
 bfs(visited, graph, '5')    # function calling
 """
+
+# A* search summarized:
+# You'll need to implement a queue
+# From you starting city, look at each neighbor's straight line distance to Bucharest
+# Go to the neighbor with the shortest straight line distance and add others to queue in order
+# Evaluate new city's neighbors, adding distance travelled already to their straightline distances
+# IF the new city's neighbor's straightline distance + distance travelled already
+# is HIGHER than that of one of the other city's in the queue, the neighbor goes behind that city in the queue
+# Essentially, every time we consider a new city to go to,
+# we consider all cities that we can reach by ANY city we already visited
+# See 4-InformedSearch.pdf to see it in action
