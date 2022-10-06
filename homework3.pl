@@ -138,13 +138,9 @@ split_in_half(LIST, L1, L2),
     hybridSort(L1, SMALL, mergeSort, T, S1),
     hybridSort(L2, SMALL, mergeSort, T, S2),
     merge(S1,S2, SLIST).
-hybridSort([H|T], SMALL, quickSort, T, SLIST):- % quickSort and any small algorithm
-length(LIST, N), N>T,      
-split(H, T, L1, L2),
-    FILLINHERE several lines in the body of this clause
+hybridSort([H|T], SMALL, quickSort, Thresh, SLIST):- % quickSort and any small algorithm
+	length([H|T], N), N>Thresh,      
+	split(H, T, L1, L2),
+    hybridSort(L1, SMALL, quickSort, Thresh, S1),
+    hybridSort(L2, SMALL, quickSort, Thresh, S2),
     append(S1, [H|S2], SLIST).
-
-/* 
-hybridSort([H|T], SMALL, quickSort, T, SLIST):-
-FILLINHERE the full body of this clause
-*/
