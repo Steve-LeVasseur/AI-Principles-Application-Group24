@@ -2,6 +2,8 @@
 :- set_prolog_flag(occurs_check, error).        % disallow cyclic terms
 :- set_prolog_stack(global, limit(8 000 000)).  % limit term space (8Mb)
 :- set_prolog_stack(local,  limit(2 000 000)).  % limit environment space
+%assertz(randomList(50,RANDLIST)).
+%:- dynamic(randomList/2).
 
 % Implementation of randomList
 randomList(0, []).
@@ -144,3 +146,12 @@ hybridSort([H|T], SMALL, quickSort, Thresh, SLIST):- % quickSort and any small a
     hybridSort(L1, SMALL, quickSort, Thresh, S1),
     hybridSort(L2, SMALL, quickSort, Thresh, S2),
     append(S1, [H|S2], SLIST).
+
+bubbleSort(LIST, X).
+insertionSort(LIST, X).
+mergeSort(LIST, X).
+quickSort(LIST, X).
+hybridSort(LIST, bubbleSort, mergeSort, 5, X).
+hybridSort(LIST, insertionSort, mergeSort, 5, X).
+hybridSort(LIST, bubbleSort, quickSort, 5, X).
+hybridSort(LIST, insertionSort, quickSort, 5, X).
