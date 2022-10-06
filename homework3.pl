@@ -35,27 +35,39 @@ ordered([H1, H2|T]):-
     H1 =< H2, 
     ordered([H2|T]).
 
-/*Comment describing insert(E, SL, SLE) ...*/
+/*Comment describing insert(E, SL, SLE) ...
+ * Given inputs element E and ordered short list SL, insert E into short list L in the ordered position
+ */
 
-/*Comment describing the 1st clause of insert ...*/
+/*Comment describing the 1st clause of insert ...
+ * If X is being inserted into an empty list, return a list containing only X if E is smaller  
+ */
+
+lessThanOrEqual(A, B):-
+    A =< B.
 
 insert(X, [],[X]). 
 insert(E, [H|T], [E,H|T]):- 
-	ordered(T),
-	ordered([E, H]),  %  SHOT IN THE DARK, NEEDS TO BE TESTED
+    ordered(T),
+    lessThanOrEqual(E, H),
     !. 
 
-/*Comment describing the 2nd clause of insert ...*/
+/*Comment describing the 2nd clause of insert ...
+ * If The tail of the list is ordered, insert E into T then append the head to the new tail (T1) and return it.
+ */
 
 insert(E, [H|T], [H|T1]):- 
-	ordered(T),
-    insert(E, T, FILLINHERE). 
+    ordered(T),
+    insert(E, T, T1). 
 
-/* Comment describing insertionSort */
+/* Comment describing insertionSort 
+ * Test query insertionSort([301, 24, 345, 65, 6, 789, 2, 23, 2, 12, 346, 86, 45, 90, 23, 56], X)
+ * insertionSort sorts a list by incrementalyl removing the leftmost element and re-inserting it so that all elements to it's left are smaller than it.
+ */
 insertionSort([], []). 
 insertionSort([H|T], SORTED) :- 
-	insertionSort(T, T1), 
-    insert(H, T1, FILLINHERE).
+    insertionSort(T, T1), 
+    insert(H, T1, SORTED).
 
 /* Comment to describe mergeSort... */
 mergeSort([], []).    %the empty list is sorted 
