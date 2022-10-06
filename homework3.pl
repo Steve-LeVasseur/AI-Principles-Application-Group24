@@ -3,6 +3,15 @@
 :- set_prolog_stack(global, limit(8 000 000)).  % limit term space (8Mb)
 :- set_prolog_stack(local,  limit(2 000 000)).  % limit environment space
 
+% Implementation of randomList
+randomList(0, []).
+randomList(N, LIST):-
+    N > 0,
+    random(0,100,X),
+    LIST = [X|T],
+    Y is N - 1,
+    randomList(Y, T).
+
 /*swap the first two elements if they are not in order*/
  swap([X, Y|T], [Y, X | T]):- 
  	Y =< X. 
