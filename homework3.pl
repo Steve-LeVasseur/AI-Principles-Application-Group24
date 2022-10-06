@@ -42,7 +42,7 @@ ordered([H1, H2|T]):-
 insert(X, [],[X]). 
 insert(E, [H|T], [E,H|T]):- 
 	ordered(T),
-	ordered([E, H]),  %  <<< SHOT IN THE DARK, NEEDS TO BE TESTED >>>
+	ordered([E, H]),  %  SHOT IN THE DARK, NEEDS TO BE TESTED
     !. 
 
 /*Comment describing the 2nd clause of insert ...*/
@@ -84,7 +84,7 @@ merge([H1|T1],[H2|T2],[H1| T]):-
 	merge(T1,[H2|T2],T).
 
 merge([H1|T1], [H2|T2], [H2|T]):-
-	H2 =< H1, % << EDITED IN FROM LECTURE; NEEDS TESTING INCASE PROF IS WRONG ??? >>
+	H2 =< H1, % EDITED IN FROM LECTURE; NEEDS TESTING INCASE PROF IS WRONG ???
 	merge([H1|T1], T2, T).
    
 /* Comment describing split for quickSort */
@@ -105,22 +105,25 @@ quickSort([H|T], LS):-
 
 
 /* Comment describing hybridSort */
-hybridSort(LIST, bubbleSort, BIGALG, T, SLIST):-
+hybridSort(LIST, bubbleSort, BIGALG, T, SLIST):- % bubbleSort and any big algorithm
 length(LIST, N), N=<T,      
-      bubbleSort(LIST, FILLINHERE).
-hybridSort(LIST, insertionSort, BIGALG, T, SLIST):-
+      bubbleSort(LIST, SLIST).
+hybridSort(LIST, insertionSort, BIGALG, T, SLIST):- % insertionSort and any big algorithm
 length(LIST, N), N=<T,
       insertionSort(LIST, SLIST).
-hybridSort(LIST, SMALL, mergeSort, T, SLIST):-
+hybridSort(LIST, SMALL, mergeSort, T, SLIST):- % mergeSort and any small algorithm
 length(LIST, N), N>T,      
 split_in_half(LIST, L1, L2),
     hybridSort(L1, SMALL, mergeSort, T, S1),
     hybridSort(L2, SMALL, mergeSort, T, S2),
     merge(S1,S2, SLIST).
-hybridSort([H|T], SMALL, quickSort, T, SLIST):-
+hybridSort([H|T], SMALL, quickSort, T, SLIST):- % quickSort and any small algorithm
 length(LIST, N), N>T,      
 split(H, T, L1, L2),
     FILLINHERE several lines in the body of this clause
     append(S1, [H|S2], SLIST).
+
+/* 
 hybridSort([H|T], SMALL, quickSort, T, SLIST):-
 FILLINHERE the full body of this clause
+*/
