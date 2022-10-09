@@ -2,8 +2,8 @@
 :- set_prolog_flag(occurs_check, error).        % disallow cyclic terms
 :- set_prolog_stack(global, limit(8 000 000)).  % limit term space (8Mb)
 :- set_prolog_stack(local,  limit(2 000 000)).  % limit environment space
-%assertz(randomList(50,RANDLIST)).
-%:- dynamic(randomList/2).
+:- dynamic list/1. % Used to create a list
+:- randomList(10, L), assertz(list(L)).
 
 % Implementation of randomList
 randomList(0, []).
@@ -71,16 +71,19 @@ insert(E, [H|T], [H|T1]):-
     ordered(T),
     insert(E, T, T1). 
 
-/* Comment describing insertionSort 
+/*
  * Test query insertionSort([301, 24, 345, 65, 6, 789, 2, 23, 2, 12, 346, 86, 45, 90, 23, 56], X)
- * insertionSort sorts a list by incrementalyl removing the leftmost element and re-inserting it so that all elements to it's left are smaller than it.
+ * insertionSort sorts a list by incrementally removing the leftmost element and re-inserting it so that all elements to it's left are smaller than it.
  */
 insertionSort([], []). 
 insertionSort([H|T], SORTED) :- 
     insertionSort(T, T1), 
     insert(H, T1, SORTED).
 
-/* Comment to describe mergeSort... */
+/* 
+Splits input list then calls mergeSort on both split lists
+Once splits are finished, they are remerged in sorted order
+ */
 mergeSort([], []).    %the empty list is sorted 
 mergeSort([X], [X]):-!.
 mergeSort(L, SL):- 
@@ -89,7 +92,10 @@ mergeSort(L, SL):-
     mergeSort(L2, S2),
     merge(S1, S2, SL).
 
-/* Comment to describe split_in_half...*/
+/* 
+Uses the length of the list to calculate the index of the halfway point
+then splits the list on that index and outputs the two halves
+*/
 intDiv(N,N1, R):- R is div(N,N1).
 split_in_half([], _, _):-!, fail.
 split_in_half([X],[],[X]).
@@ -99,18 +105,22 @@ split_in_half(L, L1, L2):-
     length(L1, N1), 
     append(L1, L2, L).
 
-/* Comment describing merge(S1, S2, S) */
-merge([], L, L). % comment
-merge(L, [],L).  % comment 
+/*
+Merges a smaller list and a larger list, placing the smaller list to the left
+*/
+merge([], L, L). 
+merge(L, [],L).   
 merge([H1|T1],[H2|T2],[H1| T]):-
 	H1 < H2,
 	merge(T1,[H2|T2],T).
 
 merge([H1|T1], [H2|T2], [H2|T]):-
-	H2 =< H1, % EDITED IN FROM LECTURE; NEEDS TESTING INCASE PROF IS WRONG ???
+	H2 =< H1,
 	merge([H1|T1], T2, T).
    
-/* Comment describing split for quickSort */
+/*
+Splits input lists for quickSort algorithm
+*/
 split(_, [],[],[]). 
 	split(X, [H|T], [H|SMALL], BIG):- 
 	H =< X, 
@@ -118,7 +128,10 @@ split(_, [],[],[]).
  split(X, [H|T], SMALL, [H|BIG]):-
     X =< H,
     split(X, T, SMALL, BIG). 
-/* Comment describing quickSort */
+/* 
+Splits input list then calls quickSort on both split lists
+Once splits are finished, they are recombined in sorted order
+*/
 quickSort([], []).
 quickSort([H|T], LS):-
         split(H, T, SMALL, BIG), 
@@ -127,7 +140,13 @@ quickSort([H|T], LS):-
         append(S, [H|B], LS). 
 
 
-/* Comment describing hybridSort */
+/* 
+If the input list is smaller in length than the input threshold,
+the SMALL sorting algorithm is called, either bubbleSort or insertionSort.
+If the input list is larger in length than the input threshold,
+hybridSort acts like the sorting algorithm declared as BIGALG,
+either mergeSort or quickSort
+ */
 hybridSort(LIST, bubbleSort, BIGALG, T, SLIST):- % bubbleSort and any big algorithm
 length(LIST, N), N=<T,      
       bubbleSort(LIST, SLIST).
@@ -147,11 +166,3 @@ hybridSort([H|T], SMALL, quickSort, Thresh, SLIST):- % quickSort and any small a
     hybridSort(L2, SMALL, quickSort, Thresh, S2),
     append(S1, [H|S2], SLIST).
 
-bubbleSort(LIST, X).
-insertionSort(LIST, X).
-mergeSort(LIST, X).
-quickSort(LIST, X).
-hybridSort(LIST, bubbleSort, mergeSort, 5, X).
-hybridSort(LIST, insertionSort, mergeSort, 5, X).
-hybridSort(LIST, bubbleSort, quickSort, 5, X).
-hybridSort(LIST, insertionSort, quickSort, 5, X).
